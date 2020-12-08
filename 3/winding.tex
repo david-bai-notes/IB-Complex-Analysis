@@ -1,0 +1,146 @@
+\section{The Winding Number}
+We want to generalize Cauchy's Theorem to non-simply-connected domains and generalize Cauchy Integral Formula to general shapes.
+\begin{definition}
+    Let $\gamma:[a,b]\to\mathbb C$ be a closed curve and fix $w\in\mathbb C\setminus\operatorname{Im}\gamma$.
+    For each $t$, we can write $\gamma(t)=w+r(t)e^{i\theta(t)}$.
+    Where $r(t)=|\gamma(t)-w|$.
+    If $\gamma$ is piecewise $C^1$, so is $r$.
+    If we can find a continuous $\theta(t)$ such that the equation holds for every $t$, then we define the winding number (or index) if $\gamma$ about $w$ by
+    $$I(\gamma;w)=\frac{\theta(b)-\theta(a)}{2\pi}$$
+\end{definition}
+Note that the winding number must be an integer.
+It is easy to show that it is well-defined (i.e. independent of the choice of continuous $\theta$), and also hopefully we can show that it always exists.
+\begin{lemma}
+    If $\gamma$ is a piecewise $C^1$ curve and $w$ not in the image of $\gamma$, then there exists continuous piecewise $C^1$ real function $\theta$ such that
+    $$\gamma(t)=w+r(t)e^{i\theta(t)}$$
+    where $r(t)=|\gamma(t)-w|$.
+\end{lemma}
+If $\gamma$ is $C^1$ and the lemma holds, then $\gamma^\prime(t)=r^\prime(t)e^{i\theta(t)}+ir(t)\theta^\prime(r)e^{i\theta(t)}$, which rearranges to give
+$$\theta^\prime(t)=\operatorname{Im}\left( \frac{\gamma^\prime(t)}{\gamma(t)-w} \right)\implies\theta(t)=\theta(a)+\operatorname{Im}\left( \int_a^t \frac{\gamma^\prime(x)}{\gamma(x)-w}\,\mathrm dx\right)$$
+\begin{proof}
+    Let $h(t)=\int_a^t\frac{\gamma^\prime(s)}{\gamma(s)-w}\,\mathrm ds$ where the singularities are skipped when integrate.
+    So $h$ is continuous and differentiable wherever $\gamma$ is, where we will have $h^\prime(t)=\gamma^\prime(t)/(\gamma(t)-w)$.
+    Except the singularities, we have
+    $$\frac{\mathrm d}{\mathrm dt}\left( (\gamma(t)-w)e^{-h(t)} \right)=\gamma^\prime(t)e^{-h(t)}-(\gamma(t)-w)e^{-h(t)}h^\prime(t)=0$$
+    So $(\gamma(t)-w)e^{-h(t)}$ is piecewise constant, but it is also continuous, so it is constant.
+    $h(a)=0$, so if we let $\alpha$ be the argument of $\gamma(a)-w$, then
+    \begin{align*}
+        \gamma(t)-w&=(\gamma(a)-w)e^{h(t)}\\
+        &=|\gamma(a)-w|e^{i\alpha}e^{\operatorname{Re}h(t)}e^{i\operatorname{Im}h(t)}\\
+        &=|\gamma(a)-w|e^{\operatorname{Re}h(t)}e^{i(\alpha+\operatorname{Im}h(t))}
+    \end{align*}
+    Taking $\theta(t)=\alpha+\operatorname{Im}h(t)$ finishes the proof.
+\end{proof}
+\begin{corollary}
+    If additionally $\gamma(t)$ is a closed curve, then
+    $$I(\gamma;w)=\frac{1}{2\pi i}\int_\gamma\frac{\mathrm dz}{z-w}$$
+\end{corollary}
+\begin{proof}
+    Follows directly from the above choice of $\theta$.
+\end{proof}
+\begin{remark}
+    Actually the lemma holds for continuous $\gamma$ (where we want $r,\theta$ to be continuous).
+    The proof is exercise.
+\end{remark}
+\begin{proposition}
+    If $\gamma:[a,b]\to D_R(\alpha)$ be a piecewise $C^1$ closed curve and $w\notin D_R(\alpha)$, then $I(\gamma,w)=0$.
+\end{proposition}
+\begin{proof}
+    Write out definition and use Cauchy.
+\end{proof}
+\begin{proposition}
+    The function $w\mapsto I(\gamma,w)$ is locally constant.
+\end{proposition}
+\begin{proof}
+    Immediate from continuity.
+\end{proof}
+\begin{definition}
+    Let $U\subset\mathbb C$ is open.\\
+    1. A closed curve $\gamma$ in $U$ is homologous to $0$ if $I(\gamma,w)$ is $0$ for all $w\notin U$.\\
+    2. $U$ is simply connected if every closed curve in $U$ is homologous to $0$.
+\end{definition}
+So a disk is simply connected but an annulus is not.
+\begin{theorem}[Cauchy Integral Formula]\label{general_cif}
+    Let $U$ be open and let $\gamma:[a,b]\to U$ be closed and homologous to $0$, then for any holomorphic $f:U\to\mathbb C$ we have
+    $$\frac{1}{2\pi i}\oint_\gamma\frac{f(z)}{z-w}\,\mathrm dz=I(\gamma,w)f(w)$$
+    for any $w\in U$ that is not in the image of $\gamma$.
+\end{theorem}
+Note that we can assume $U$ is a bounded domain.
+In particular, by integrating $F(z)=(z-w)f(z)$, we know from the theorem that
+$$\int_\gamma f(z)\,\mathrm dz=0$$
+\begin{corollary}
+    If $U$ is simply connected, then for any closed curve $\gamma$ in $U$ and any holomorphic function $f$ on $U$, we have
+    $$\int_\gamma f(z)\,\mathrm dz=0$$
+\end{corollary}
+\begin{proof}
+    Immediate from the preceding theorem.
+\end{proof}
+\begin{remark}
+    By the theorem, fix $\gamma$, if
+    $$\oint_\gamma f(z)\,\mathrm dz=0$$
+    holds for functions in the form $f(z)=1/(z-w)$, then it holds for every holomorphic $f$.
+\end{remark}
+\begin{proposition}
+    Suppose $U\subset\mathbb C$ is open and $\phi:U\times [a,b]\to\mathbb C$ is continuous and each $z\mapsto \phi(z,s)$ is holomorphic, then
+    $$\int_a^b\phi(z,s)\,\mathrm ds$$
+    is holomorphic.
+\end{proposition}
+\begin{proof}
+    Morera's and Fubini's on closed intervals.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{general_cif}]
+    First define a function $g$ on $U\times U\to\mathbb C$ by
+    $$g(z,w)=\begin{cases}
+        (f(z)-f(w))/(z-w)\text{, if $z\neq w$}\\
+        f^\prime(z)\text{, if $z=w$}
+    \end{cases}$$
+    which is continuous since $f$ is holomorphic.
+    Also define
+    $$h(w)=\oint_\gamma g(z,w)\,\mathrm dz,w\in U;h_1(w)=\oint_\gamma\frac{f(z)}{z-w}\,\mathrm dz,w\in\mathbb C\setminus\gamma([a,b])=U_1$$
+    Also, $h=h_1$ on $U\cap U_1$ and $U\cup U_1=\mathbb C$ since $\gamma$ is homologous to zero, so we can define
+    $$\phi(w)=\begin{cases}
+        h(w)\text{, if $w\in U$}\\
+        h_1(w)\text{, if $w\in U_1$}
+    \end{cases}$$
+    Then $\phi$ is entire by the preceding proposition, and since the behaviour of $\phi$ as $|w|\to\infty$ shall be that of $h_1$, and as $I(\gamma;w)=0$ for large enough $|w|$, we have
+    $$|\phi(w)|\le\frac{\operatorname{length}(\gamma)\sup_\gamma|f|}{|w|-R}\to 0$$
+    as $|w|\to\infty$.
+    By Theorem \ref{holo_bdd_const}, $\phi$ is constantly zero, in particular, $h$ is constantly zero on $U$.
+    This implies the result.
+\end{proof}
+The clever part of the proof that we used a global theorem (i.e. Liouville) to show a local result, which is pretty cool.
+\begin{definition}
+    Let $\gamma_0,\gamma_1:[a,b]\to\mathbb C$ be two closed piecewise $C^1$ curves.
+    We say $\gamma_0$ is homotopic to $\gamma_1$ if there is a function $H:[a,b]\times [0,1]\to\mathbb C$ with $H(0,t)=\gamma_0(t),H(1,t)=\gamma_1(t)$, and for each $s\in [0,1]$, $H(t,s)$ is a closed piecewise $C^1$ curve, that is $\forall s\in[0,1],H(s,a)=H(s,b)$.
+\end{definition}
+\begin{theorem}\label{homotopy}
+    For curves $\gamma_0,\gamma_1:[0,1]\to U$ be homotopic and $w\neq U$, we have $I(\gamma_0,w)=I(\gamma_1,w)$.
+\end{theorem}
+\begin{lemma}
+    If $\gamma_0,\gamma_1:[0,1]\to\mathbb C$ are piecewise $C^1$, $w\in\mathbb C$ and
+    $$\forall t\in [0,1],|\gamma_0(t)-\gamma_1(t)|<|w-\gamma_1(t)|$$
+    then $I(\gamma_0;w)=I(\gamma_1;w)$.
+\end{lemma}
+\begin{proof}
+    Exercise.
+\end{proof}
+We will show the $C^1$ case, but the general case is also true by similar idea.
+\begin{proof}[Proof of Theorem \ref{homotopy}]
+    Consider the continuous deformation $H:[0,1]\times [0,1]\to\mathbb C$.
+    Now $[0,1]^2$ is compact, so $H$ has compact (hence closed) image and is uniformly continuous.
+    So for $w\notin U$, so there is $\epsilon>0$, for any $(s,t)\in [0,1]^2$, $|H(s,t)-w|>2\epsilon$.
+    Also there is $n\in\mathbb N$ such that
+    $$|s-s'|+|t-t'|\le\frac{1}{n}\implies |H(s,t)-H(s',t')|<\epsilon$$
+    Denote $H(s,t)$ by $\gamma_s(t)$, this would mean that for $k=1,2,\ldots,n$, we have $|\gamma_{(k-1)/n}(t)-\gamma_{k/n}(t)|<\epsilon$, but we also have $|w-\gamma_{k/n}(t)|>2\epsilon$, so
+    $$|\gamma_{(k-1)/n}(t)-\gamma_{k/n}(t)|<\epsilon<2\epsilon<|w-\gamma_{k/n}(t)|$$
+    So by the preceding lemma $I(\gamma_0;w)=I(\gamma_{1/n};w)=\cdots=I(\gamma_1;w)$.
+\end{proof}
+So a star-shaped domain is simply connected.
+Given $\gamma:[0,1]\to U$ and let $p$ be the centre of $U$, then we can shrink $\gamma$ to $p$ in the obvious way.
+\begin{remark}
+    If a curve is null-homotopic, then by the theorem it is homologous to $0$, but the converse might not be true.
+    The usual algebraic topological definition of simple-connectedness is that every closed curve is null-homotopic.
+    So $U$ is simply-connected in the algebraic topological way implies that it is simply connected in the complex analysis way in terms of winding number.
+    This then implies that Cauchy's Theorem (in simply connected domains) holds.\\
+    The reverse implication holds but complex simply-connectedness implying topological simply-connectedness part is not trivial.
+\end{remark}

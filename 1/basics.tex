@@ -1,0 +1,220 @@
+\section{Basic Notions}
+\subsection{Definitions}
+\begin{definition}
+    A subset $U\subset\mathbb C$ is open if $\forall u\in U,\exists r>0,D_r(u)\subset U$.
+\end{definition}
+If we identify $\mathbb C$ with $\mathbb R^2$ in the obivous way, and give $\mathbb R^2$ the usual topology, then $U\subset\mathbb C$ is open iff it is open in $\mathbb R^2$.\\
+We shall be interested in functions $f:U\to\mathbb C$ where $U$ is open.
+\begin{definition}
+    Let $U\subset\mathbb C$ be open and $f:U\to\mathbb C$.
+    We say $\lim_{z\to c}f(z)=A$ if $\forall\epsilon>0,\exists\delta>0$,
+    $$0<|z-c|<\delta\implies |f(z)-f(c)|<\epsilon$$
+    $f$ is continuous at $c\in U$ if $\lim_{z\to c}f(z)=f(c)$.
+    $f$ is continuous in $U$ if it is continuous everywhere in $U$.
+\end{definition}
+We can always write $f(x+iy)=u(x,y)+iv(x,y)$ where $u,v:\mathbb U\to\mathbb R$ where $U$ is open in $\mathbb R^2$.
+It is easy to see that $\mathbb C$ inherits the continuity condition in $\mathbb R^2$ since it inherits the topology from it.
+So we have that the continuity of $f$ is equivalent to that of $u,v$.
+\begin{definition}
+    Let $f:U\to\mathbb C$ be as before, and $w\in U$.
+    We say $f$ is differentiable at $w$ if the limit
+    $$\lim_{z\to w}\frac{f(z)-f(w)}{z-w}$$
+    exists.
+    If it exists, we say $f$ is differentiable at $w$ and has derivative equals the limit.\\
+    If $f$ is differentiable everywhere in an open neighbourhood of $w$, then we say $f$ is holomorphic at $w$.
+    \footnote{Some authors use the word `analytic'}\\
+    We say $f$ is holomorphic on $U$ if it is holomorphic everywhere on $U$.
+    (Or equivalently it is differentiable everywhere.)
+\end{definition}
+Rules that can be obtained from real differentiation by first principle mostly extends to complex differentiation.
+For example, polynomials are differentiable everywhere, and rational functions are differentiable in the subset (which is open as the complement of a finite subset) where they are defined.
+\subsection{The Cauchy-Riemann Equation}
+Although complex differentiation exhibits similar definition as real differentiation, they behave very differently.
+A natural question is, is the differentiability of $f$ behave the same as the differentiability of $u,v$?
+The answer is no.
+\begin{theorem}[Cauchy-Riemann Equation]
+    $f:U\to\mathbb C$ is differentiable at $w=c+id$ iff the functions $u,v$ are differentiable at $(c,d)$ and they satisfies $u_x=v_y,u_y=-v_x$.
+\end{theorem}
+\begin{proof}
+    By definition, $f$ is differentiable at $w$ with derivative $f^\prime(w)=p+iq$ if and only if
+    $$\lim_{z\to w}\frac{f(z)-f(w)-f^\prime(z)(z-w)}{|z-w|}=0$$
+    which is equivalent to the case where we seperate the real and imaginary part, which is just to say
+    $$
+    \begin{cases}
+        \lim_{(x,y)\to(c,d)}\frac{u(x,y)-u(c,d)-(p(x-c)-q(y-d))}{\|(x-c,y-d)\|}=0\\
+        \lim_{(x,y)\to(c,d)}\frac{v(x,y)-v(c,d)-(p(x-c)+q(y-d))}{\|(x-c,y-d)\|}=0
+    \end{cases}$$
+    which happens iff $Du(c,d)=(p,-q)$ and $Dv(c,d)=(p,q)$.
+    The theorem follows.
+\end{proof}
+\begin{remark}
+    Just because $u,v$ has partial derivatives satisfying Cauchy-Riemann equation does not guarantee the total differentiability.
+    A deeper question is what if we require them to be so on an open set, but that goes beyond the scope of the course.
+\end{remark}
+From the theorem, we have obtained an expression of the complex derivative $f^\prime=u_x+iv_x$.
+If we just want to show that the differentiability of $f$ at $c+id$ implies the existence of partials of $u,v$ satisfying Cauchy-Riemann equations, then we can just proceed by taking the limit of $z-w\to 0$ from both axes.
+\begin{example}
+    $f(z)=\bar{z}$ is nowhere differentiable since it does not satisfy the first C-R equation.
+\end{example}
+\begin{remark}
+    Complex differentiability is much more restrictive than real ones.
+    Of course, we will exhibit examples to justify it.
+\end{remark}
+\begin{theorem}[Liouville Theorem]\label{holo_bdd_const}
+    If $f:\mathbb C\to \mathbb C$ is holomorphic and bounded, then $f$ is constant.
+\end{theorem}
+\begin{theorem}\label{infinite_holo}
+    Let $U$ be an open set in $\mathbb C$, then if $f:U\to\mathbb C$ is holomorphic, so is $f^\prime$.
+\end{theorem}
+\begin{theorem}\label{uniform_holo}
+    A sequence of holomorphic functions $f_n:U\to\mathbb C$ on the same open domain, and $f_n\to f$ uniformly, then $f$ is holomorphic.
+\end{theorem}
+By Theorem \ref{infinite_holo}, holomorphic functions are infinite differentiable, so any order of partial derivatives of $u,v$ exists, so we can differentiate the Cauchy-Riemann equation one more time to get $u_{xx}+u_{yy}=0$, so $u$ is a harmonic function, similarly $v$ is harmonic as well.
+So the real and imaginary part of a holomorphic function are harmonic.
+\begin{corollary}
+    Let $f=u+iv:U\to\mathbb C$, suppose that $u,v$ has continuous partial derivatives in $U$ and $u,v$ satisfy Cauchy-Riemann Equation, then $f$ is holomorphic.
+\end{corollary}
+\begin{proof}
+    Immediate from what we have got and a result from Analysis and Topology.
+\end{proof}
+\begin{remark}
+    Once we know Theorem \ref{infinite_holo}, the converse of the preceding corollary follows.
+\end{remark}
+\begin{definition}
+    A curve is a continuous map $\gamma:[a,b]\to\mathbb C$.
+    It is called $C^1$ if $\gamma^\prime$ exists and is continuous on $[a,b]$.\\
+    An open subset $U\subset\mathbb C$ is path connected if for any $z,w\in U$, there is a curve $\gamma:[a,b]\to U$ such that $\gamma(a)=z,\gamma(b)=w$.\\
+    A non-empty open path-connected subset of $\mathbb C$ is called a domain.
+\end{definition}
+\begin{corollary}
+    Let $U$ be a domain and $f:U\to\mathbb C$ is homomorphic. If $f^\prime\equiv 0$, then $f$ is constant.
+\end{corollary}
+\begin{proof}
+    Proved in Analysis and Topology.
+\end{proof}
+\subsection{Power Series}
+\begin{theorem}
+    For any sequence of complex numbers $(c_n)$, there is some $R\in [0,\infty]$ such that the power series
+    $$\sum_{n=0}^\infty c_n(z-a)^n$$
+    such that it converges absolutely for $|z-a|<R$ and diverges for $|z-a|>R$.\\
+    If $R\in\mathbb R_{>0}$, and if $0<r<R$, then the convergence is uniform on $B_r(a)$ (or $D_r(a)$, they are equivalent anyways).
+\end{theorem}
+\begin{definition}
+    Such an $R$ is called the radius of convergence.
+\end{definition}
+\begin{proposition}
+    $R=\frac{1}{\lambda}$ where $\lambda=\limsup_{n\to\infty}\sqrt[n]{|c_n|}$.
+\end{proposition}
+\begin{theorem}
+    Define $f$ on the disk $D_R(a)$ by
+    $$f(z)=\sum_{n=0}^\infty c_n(z-a)^n$$
+    where $R>0$ is the radius of convergence of the series.
+    Then\\
+    1. $f$ is holomorphic on this disk,\\
+    2. And
+    $$\sum_{n=0}^\infty (n+1)c_{n+1}(z-a)^n$$
+    is convergent on $D_R(a)$ and is the derivative of $f$.\\
+    3. $f$ has derivatives of all orders on $D_R(a)$ and $f^{(n)}(a)=c_nn!$.\\
+    4. If $f$ vanished in some open disk $D_r(a)$ with $0<r<R$, then it vanishes on the whole of $D_R(a)$.
+\end{theorem}
+\begin{proof}
+    3 follows from 2 and 4 follows from 3.\\
+    WLOG $a=0$.
+    To prove 1 and 2, let $|z|<R$ and choose $\rho$ such that $|x|<\rho<R$, then we have
+    $$\lim_{n\to\infty}\frac{n|c_n||z|^{n-1}}{|c_n|\rho^n}=\lim_{n\to\infty}\frac{n}{\rho}\left( \frac{|z|}{\rho} \right)^n\to 0$$
+    so the derived series also converges on $D_R(0)$.\\
+    To show that $f$ is holomorphic with derivative equals the derived series, we fix some $w\in D_R(0)$.
+    Note that $f$ is differentiable at $w$ with derivative being the derived series $\sigma$ if and only if the function
+    $$g(h)=
+    \begin{cases}
+        \frac{f(z)-f(w)}{z-w}\text{, if $z\neq w$}
+        \sigma\text{, if $z=w$}
+    \end{cases}$$
+    is continuous at $w$.
+    But $g(z)=\sum_{n=0}^\infty h_n(z)$ where
+    $$h_n(z)=\begin{cases}
+        c_n(z^{n-1}+z^{n-2}w+\cdots+w^{n-1})\text{, for $z\neq w$}\\
+        nc_nw^{n-1}\text{, for $z=w$}
+    \end{cases},n>0;h_0(z)=0$$
+    Note that each $h_n$ is continuous.
+    So the continuity of $g$ at $w$ follows from the uniform convergence of the series.
+    Again we take $0<|w|<r<R$, so for any point $z\in D_r(0)$, we have
+    $$|h_n(z)|=|c_n||z^{n-1}+z^{n-2}w+\cdots+w^{n-1}|\le n|c_n||r|^{n-1}$$
+    which proves the uniform convergence.
+    So 1 and 2 are proved.
+\end{proof}
+\begin{definition}
+    The exponential function is defined as
+    $$e^z=\exp(z)=\sum_{k=0}^\infty\frac{z^k}{k!}$$
+\end{definition}
+\begin{definition}
+    An entire function is a function that is holomorphic on all of $\mathbb C$.
+\end{definition}
+\begin{proposition}
+    1. $\exp$ is entire with derivative equals to itself.\\
+    2. $\exp(z+w)=\exp(z)\exp(w)$.\\
+    3. $\exp(z)\neq 0$.\\
+    4. $\exp(z)=1\iff z\in2\pi i\mathbb Z$.\\
+    5. $\exp:\mathbb C\to\mathbb C\setminus\{0\}$ is surjective.
+\end{proposition}
+\begin{proof}
+    Trivial.
+\end{proof}
+\begin{definition}
+    Given $z\in\mathbb C$, we say $w\in\mathbb C$ is a logarithm of $z$ of $e^w=z$.
+\end{definition}
+Note that $z$ has a logarithm iff $z\neq 0$.
+If $w_1,w_2$ are two logrithms of $z$, then we immediately have $w_1-w_2\in 2\pi i\mathbb Z$.
+\begin{definition}
+    Let $U\subset\mathbb C^\star=\mathbb C\setminus\{0\}$.
+    A branch of the logarithm on $U$ is a continuous function $\lambda:U\to\mathbb C$ such that $\exp\circ\lambda=\operatorname{id}$.
+\end{definition}
+\begin{remark}
+    1. If such $\lambda$ does exixt, then $\lambda$ is holomorphic on $U$ by simply computation.\\
+    2. From the definition, it follows that $|z|=e^{\operatorname{Re}\lambda(z)}$, so it is immediate that any branch $\lambda$ has $\operatorname{Re}\lambda(z)=\log|z|$.
+\end{remark}
+\begin{definition}
+    The principal branch of logarithm is the function $\operatorname{Log}:U_1=\mathbb C\setminus\{x\in\mathbb R:x\le 0\}\to\mathbb C$ given by $\operatorname{Log}(z)=\log|z|+i\arg z$ where the value of $\arg$ is taken in the open interval $(-\pi,\pi)$. 
+\end{definition}
+Obviously in this open set it is a inverse of $\exp$.
+To see the continuity, observe that the map $z\mapsto z/|z|$ is continuous and the map $\theta\mapsto e^{i\theta}$ is a homeomorphism $(-\pi,\pi)\to S\setminus\{-1\}$
+\begin{proposition}
+    1. $\operatorname{Log}$ is holomorphic on $U_1$ with derivative $1/z$.\\
+    2. For $|z|<1$,
+    $$\operatorname{Log}(z)=\sum_{n=1}^\infty\frac{(-1)^{n+1}z^n}{n}$$
+\end{proposition}
+\begin{proof}
+    Trivial.
+\end{proof}
+\begin{remark}
+    There is no way to extend $\operatorname{Log}$ to the whole of $\mathbb C^\star$ and remain a branch since
+    $$\lim_{\theta\to \pi^+}e^{i\theta}\neq\lim_{\theta\to \pi^-}e^{i\theta}$$
+    In fact there is no branch that can be such extended.
+\end{remark}
+Using $\exp$ and $\operatorname{Log}$, we can construct the familiar functions we had in real analysis, like the trigonometrics, hypertrigonometrics, etc., in the way we know (like $\cos(z)=(e^{iz}+e^{-iz})/2$, etc).
+We can also define, for $z\notin \mathbb R_{\le 0}$, $z^\alpha=\exp(\alpha\operatorname{Log}(z))$.\\
+Let $f:U\to\mathbb C$ be a holomorphic function.
+A number $w\in U$ having $f^\prime(w)$ is nice in the sense that $f$ is invertible there by Inverse Function Theorem with $(f^{-1})^\prime(f(w))=1/f^\prime(w)$.
+One can check that $f^{-1}$ also satisfies the Cauchy-Riemann equation, hence is also holomorphic.\\
+It is also nice in a geometric sense as $f$ preserves angles at that point.
+Let $\gamma_1,\gamma_2:[-1,1]\to\mathbb C$ be $C^1$ curves with $\gamma_1(0)=\gamma_2(0)=w$ and $\gamma_1^\prime(0)\gamma_2^\prime(0)\neq 0$, then since $(f\circ \gamma_1)^\prime(0)=f^\prime(w)\gamma^\prime_1(0)$.
+Similar for $\gamma_2$.
+Since $f^\prime(w)\neq 0$, we have
+$$\frac{\gamma^\prime_1(0)}{\gamma_2^\prime(0)}=\frac{(f\circ\gamma_1)^\prime(0)}{(f\circ\gamma_2)^\prime(0)}$$
+So $f$ preserves angles.
+\begin{definition}[Conformal Equivalence]
+    Let $U$ be an open set.
+    A holomorphic function $f:U\to\mathbb C$ is called conformal at $w\in U$ if $f^\prime(w)\neq 0$.\\
+    If for domains $D,D'$ there is a holomorpic bijection $f:D\to\tilde{D}$ which is conformal at every point, then we say $D,D'$ are conformal equivalent.
+\end{definition}
+\begin{example}
+    1. Any Mobius map $f:\mathbb C\cup\{\infty\}\to\mathbb C\cup\{\infty\}$ is a conformal equivalence.\\
+    2. The map $z\mapsto z^n$ from $\{\mathbb z\in\mathbb C^\star:0\le\arg z\le \pi/n\}$ to the upper half plane $\mathbb H=\{z\in\mathbb C:\operatorname{Im}z>0\}$ is conformal.\\
+    3. The exponential $\exp:\{z\in\mathbb C:-\pi<\operatorname{Im}(z)<\pi\}\to\mathbb C\setminus\mathbb R_{\le 0}$.\\
+    4. Consider $g:z\mapsto (z-i)/(z+i)$ with $g:\mathbb H\to D_1(0)$.
+    It is also conformal.
+\end{example}
+\begin{theorem}[Riemann Mapping]
+    Let $D$ be a domain bounded by a simple closed curve, then it is conformally equivalent to the unit disk.\\
+    More generally, any simply connected domain that is not the whole complex plane is conformally equivalent to the unit disk.
+\end{theorem}

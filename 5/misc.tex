@@ -1,0 +1,50 @@
+\section{The Argument Principle, Local Degree and Rouch\'e's Theorem}
+\begin{definition}
+    Let $D$ be a domain, we say a closed curve $\gamma:[0,1]\to\mathbb C$ bounds $D$ if $I(\gamma;w)=1$ for any $w\in D$ and $I(\gamma;w)=0$ for any $w\notin D\cup\gamma([0,1])$.
+\end{definition}
+Note that the orientation matters here.
+$D$ is indeed bounded since $\gamma([0,1])$ is contained in $D_R(0)$ for a large enough $R$, but $I(\gamma;w)=0$ for any $w\notin D_R(0)$, so $D\subset D_R(0)$, hence is bounded.
+\begin{theorem}[The Argument Principle]
+    Let $\gamma$ be a closed curve bounding a domain $D$ and suppose that $f$ is meromorphic in some open set $U\subset \bar{D}\cup\gamma([0,1])$ such that $f$ has no pole or zero on $\gamma([0,1])$.
+    If $f$ has precisely $N$ zeros and $P$ poles in $D$ (both counting with multiplicity), then
+    $$N-P=\frac{1}{2\pi i}\int_\gamma\frac{f^\prime(z)}{f(z)}\,\mathrm dz=I(\Gamma;0)$$
+    where $\Gamma=f\circ\gamma$.
+\end{theorem}
+\begin{proof}
+    $N$,$P$ are finite since $D$ is bounded and zeros and poles are isolated points.
+    Also note that $0\notin\Gamma([0,1])$ since $f\circ\gamma$ is never $0$.
+    So
+    $$I(\Gamma,0)=\frac{1}{2\pi i}\int_\Gamma\frac{1}{z}\,\mathrm dz=\frac{1}{2\pi i}\int_0^1\frac{1}{f(\gamma(t))}f^\prime(\gamma(t))\gamma^\prime(t)\,\mathrm dt=\frac{1}{2\pi i}\int_\gamma\frac{f^\prime(z)}{f(z)}\,\mathrm dz$$
+    which is the second equality.\\
+    As for the other part, note that if $a$ is neither a pole or a zero at $f$, then $f^\prime/f$ is holomorphic at $a$.
+    Also, if $a$ is a zero (or a pole) of order $k$ at $z=a$, then $f^\prime/f$ has a simple pole at $z=a$ with $\operatorname{Res}_{f^\prime/f}(a)=k$ (or $-k$ respectively).
+    Now $I(\gamma,w)=0$ for any $w\in D$ by hypothesis, so applying the residue theorem to $f^\prime/f$ shall give the result.
+\end{proof}
+\begin{definition}
+    Let $f:D_R(a)\to\mathbb C$ be holomorphic and nonconstant, then the local degree of $f$ at $a$, denoted $\deg_f(a)$, is the order of zero of $f(z)-f(a)$ at $0$.
+\end{definition}
+Note that the local degree has to be positive.
+\begin{theorem}[Local Degree Theorem]
+    Consider $f:D_R(a)\to\mathbb C$ nonconstant and holomorphic.
+    Suppose $\deg_f(a)=d>0$, then for every sufficiently small $r>0$, there is $\epsilon>0$ such that for any $w$ with $0<|w-f(a)|<\epsilon$, the equation $f(z)=w$ has precisely $d$ roots in $D(a,r)\setminus\{a\}$ that are all distinct.
+\end{theorem}
+\begin{proof}
+    Since $f$ is nonconstant, by the principle of isolated zeros, we can choose $r>0$ such that $f(z)-f(a)\neq 0$ and $f^\prime(z)\neq 0$ for any $z\in B_r(a)\setminus\{a\}$.
+    Now take $\gamma(t)=a+re^{it}$ for $t\in [0,2\pi]$, then $f(\gamma(t))\neq f(a)$ for any $t$, so $\Gamma=f\circ\gamma$ misses $f(a)$, so we can choose $\epsilon$ such that $\Gamma$ never enters $D_\epsilon(f(a))$.
+    Then for $w\in D_\epsilon(f(a))\setminus\{f(a)\}$, by the argument principle, the number of zeros counting multiplicity of $f(z)-w$ in $D_r(a)$ is $I(\Gamma;w)=I(\Gamma;f(a))=d$.
+    These zeros must all be in $D_r(a)\setminus\{a\}$ and none of them has multiplicity more than one as $f^\prime(a)\neq 0$.
+\end{proof}
+\begin{corollary}
+    A nonconstant holomorphic function on a domain is an open map.
+\end{corollary}
+\begin{proof}
+    Follows directly.
+\end{proof}
+\begin{theorem}[Rouch\'e's Theorem]
+    Let $\gamma:[0,1]\to\mathbb C$ be a curve that bounds a domain $D$ and $f,g$ holomorphic on a open set $U$ containing $\bar D\cup\gamma([0,1])$.
+    If $|f|>|g|$, then $f,f+g$ have the same number of zeros on $D$.
+\end{theorem}
+\begin{proof}
+    $|f|>|g|$ hence $f,f+g$ are nowhere zero on $\gamma$, so we apply the argument principle on $h=(f+g)/f=1+g/f$.
+    We have $I(h\circ\gamma;0)=0$, so $h$ has $N=P$, so $f+g,f$ has the same number of zeros.
+\end{proof}

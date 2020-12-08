@@ -1,0 +1,171 @@
+\section{Laurent Series, Isolated Singularities and the Residue Theorem}
+\begin{theorem}
+    Consider an open annulus $A=\{z\in\mathbb C:r<|z-a|<R\}$ and let $f$ be holomorphic on $A$.
+    Then $f$ has a Laurent series expansion
+    $$f(z)=\sum_{n\in\mathbb Z}c_n(z-a)^n=\left( \sum_{n=0}^\infty c_n(z-a)^n \right)+\left( \sum_{n=1}^\infty c_{-n}(z-a)^{-n} \right)$$
+    for every $z\in A$.
+    In addition, for any $r<\rho<R$, we have
+    $$c_n=\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{(z-a)^{n+1}}\,\mathrm dz$$
+    Also for any $r<\rho_1<\rho_2<R$ the series converges uniformly on $\{z\in\mathbb C:\rho_1<|z-a|<\rho_2\}$
+\end{theorem}
+\begin{proof}
+    Let $w\in A$, and choose $r<\rho_2<|w-a|<\rho_1<R$ and let $\gamma_1$ be the anticlockwise curve as the boundary of the a polar slice of the annulus $\{z\in\mathbb C:\rho_2<|z-a|<\rho_1\}$ that contains $w$, and $\gamma_2$ be the boundary of the rest such that $\gamma_{1,2}$ agrees on the slices.
+    Now
+    $$\oint_{\gamma_2}\frac{f(z)}{z-w}\,\mathrm dz=0,\frac{1}{2\pi i}\oint_{\gamma_1}\frac{f(z)}{z-w}\,\mathrm dz=I(\gamma,w)f(w)$$
+    But since $\gamma_1$ is homotopic to a circle around $w$, $I(\gamma,w)=1$.
+    Hence
+    \begin{align*}
+        f(w)&=\frac{1}{2\pi i}\left( \oint_{\gamma_1}\frac{f(z)}{z-w}+\oint_{\gamma_2}\frac{f(z)}{z-w} \right)\\
+        &=\frac{1}{2\pi i}\left( \oint_{\partial D_{\rho_1}(a)}\frac{f(z)}{z-w}\,\mathrm dz-\oint_{\partial D_{\rho_2}(a)}\frac{f(z)}{z-w}\,\mathrm dz \right)\\
+        &=f_1(w)+f_2(w)\\
+        f_1(w)&=\frac{1}{2\pi i}\oint_{\partial D_{\rho_1}(a)}\frac{f(z)}{z-w}\,\mathrm dz\\
+        f_2(w)&=-\frac{1}{2\pi i}\oint_{\partial D_{\rho_2}(a)}\frac{f(z)}{z-w}\,\mathrm dz
+    \end{align*}
+    Expanding $f_1$ as Taylor series about $a$ would give the nonnegative terms of the Laurent series.
+    We shall produce the negative terms from $f_2$ by a trick we used before.
+    Observe
+    $$-\frac{1}{z-w}=\frac{1}{w-a}\frac{1}{1-(z-a)/(w-a)}=\sum_{m=1}^\infty\frac{(z-a)^{m-1}}{(w-a)^m}$$
+    which converges uniformly as a geometric series.
+    So we can change the order of integration and get
+    $$f_2(w)=\sum_{m=1}^\infty\left(\frac{1}{2\pi i}\oint_{\partial D_{\rho_2}(a)}f(z)(z-a)^{m-1}\,\mathrm dz\right)(w-a)^{-m}$$
+    writing $m=-n$ gives the existence of the Laurent series.
+    The rest is trivial.
+\end{proof}
+\begin{definition}
+    A complex valued function $f$ has an isolated singularity at a point $a\in\mathbb C$ if $f$ is defined and holomorphic in a punctured disk $D_r(a)\setminus\{a\}$ for some $r>0$ but not in $D_r(a)$ (i.e. either not defined at $a$ or not holomorphic there).
+\end{definition}
+\begin{example}
+    1. $f(z)=1/z$ has an isolated singularity at $z=0$.\\
+    2. $f(z)=(e^z-1)/z$ also has one at $0$.\\
+    3. $f(z)=e^{1/z}$ has one at $0$.
+\end{example}
+\begin{definition}
+    An isolated singularity $a$ of $f$ is removable if there is a holomorphic $g$ defined on $D_r(a)$ for some $r>0$ and $f=g$ on $D_r(a)\setminus\{a\}$.
+\end{definition}
+\begin{proposition}
+    $f$ has a removable singularity at $a$ iff $\lim_{z\to a}(z-a)f(z)=0$.
+\end{proposition}
+\begin{proof}
+    The ``only if'' part is immediate.
+    For the other direction, Suppose $f$ is holomorphic on $D_r(a)\setminus\{a\}$ and $\lim_{z\to a}(z-a)f(z)=0$, then let
+    $$h(z)=\begin{cases}
+        (z-a)^2f(z)\text{, if $z\neq 0$}\\
+        0\text{, if $z=0$}
+    \end{cases}$$
+    So $h$ is holomorphic in some disk $D_r(a)\setminus\{a\}$.
+    Also
+    $$\frac{h(z)-h(a)}{z-a}=(z-a)f(z)\to 0$$
+    as $z\to a$, so $h$ is actually holomorphic on $D_r(a)$ with $h^\prime(a)=0$.
+    But $h$ has a zero of order at least $2$, hence there is a holomorphic $g$ on $D_r(a)$ such that $h(z)=(z-a)^2g(z)$, but then $g$ equals $f$ on $D_r(a)\setminus\{a\}$.
+\end{proof}
+So the isolated singularities of bounded functions are removable.
+\begin{definition}
+    Let $a$ be an isolated singularity of $f:D_r(a)\to\mathbb C$, then $a$ is a pole if the limit $\lim_{z\to a}|f(z)|=\infty$.\\
+    If $a$ is neither a pole nor a removable singularity, we say $a$ is an essential singularity.
+\end{definition}
+\begin{proposition}\label{pole_equiv}
+    Let $U$ be a domain and $f:U\setminus\{a\}\to\mathbb C$ is holomorphic for $a\neq U$.
+    Then the followings are equivalent:\\
+    1. $a$ is a pole of $f$.\\
+    2. There is $\epsilon>0$ such that there is a holomophic $h:D_\epsilon(a)\to\mathbb C$ with $h(z)=0\iff z=a$ and $\forall z\in D_\epsilon(a)\setminus\{a\},f(z)=1/h(z)$.\\
+    3. There is a holomorphic $g:U\to\mathbb C$ such that $g(a)\neq 0$ and
+    $$f(z)=(z-a)^{-k}g(z)$$
+    for some integer $k\ge 1$.
+    Also such $g,k$ are uniquely determined by $f$.
+\end{proposition}
+\begin{proof}
+    $1\implies 2$: Choose $\epsilon$ such that $|f(z)|\ge 1$ whenever $0<|z-a|<\epsilon$, so $1/f$ is holomorphic on $D_\epsilon(a)\setminus\{a\}$.
+    But $a$ becomes a removable singularity of $1/f$ by the preceding proposition, so the extension of $1/f$ to the entire disk $D_\epsilon(a)$ would be the desired $h$.\\
+    $2\implies 3$: Suppose $h$ has a zero of order $k$, then $h(z)=(z-a)^kq(z)$ where $q$ is holomorphic and $q(a)\neq 0$, so $q$ is nonzero in a disk $D\subset D_\epsilon(a)$ around $a$, hence
+    $$g(z)=\begin{cases}
+        1/q(z)\text{, if $z\in D$}\\
+        (z-a)^kf(z)\text{, if $z\in U\setminus\{a\}$}
+    \end{cases}$$
+    which is well-defined by the definition of $h$ and is holomorphic.
+    Uniqueness follows.\\
+    $3\implies 1$ is trivial.
+\end{proof}
+\begin{corollary}
+    If $z\in\mathbb C$ is an essential singularity of $f$, then the limit of $|f(z)|$ as $z\to a$ does not exist, either as a real number or infinity.
+\end{corollary}
+\begin{example}
+    If we compute $e^{1/z}$ as $z\to 0$, we will find that it does not exist, so $0$ is an essential singularity of it.
+\end{example}
+\begin{definition}
+    If $f$ has a pole at $a$, then the integer $k$ as stated in Proposition \ref{pole_equiv} is called the order of the pole $a$.
+    If $k=1$, then we call $a$ a simple pole.\\
+    Let $U$ be a domain and $S\subset U$ is a set of isolated points in $U$.
+    If $f$ is holomorphic on $U\setminus S$ and each $s\in S$ is either a removable singularity or a pole of $f$, we say $f$ is meromorphic on $U$.
+\end{definition}
+Meromorphic functions can be taken (maybe) as holomorphic functions from $U$ to $\mathbb C_\infty$.
+\begin{remark}
+    By the preceding corollary, at an isolated essential singularity $a$ of $f$, then $f$ oscillates around $a$.
+    More precisely we have the Cosorati-Weierstrass Theorem (proven in example sheet), where we find that the image of any punctured neighbourhood around $a$ has dense image in $\mathbb C$.
+    A much much harder theorem will show that this image is the entire complex plane $\mathbb C$ except possibly one point.
+\end{remark}
+\begin{proposition}
+    Let $f$ be holomorphic in $D_R(a)\setminus\{a\}$, then we have the series
+    $$f(z)=\sum_{n\in\mathbb Z}c_n(z-a)^n,\forall z\in D_R(a)\setminus\{a\}$$
+    Also, $\forall n<0,c_n=0$ implies that $a$ is removable.\\
+    If now $c_{-k}\neq 0$ for some $k>0$ and $c_n=0$ for $n<-k$, then there is a holomorphic $g:D_R(a)\to\mathbb C$ such that
+    $$f(z)=\sum_{n=-k}^\infty c_n(z-a)^n=\frac{g(z)}{(z-a)^k}$$
+    So $f$ has a pole of order $k$ at $a$.
+\end{proposition}
+\begin{proof}
+    Trivial.
+\end{proof}
+Let rhe series expansion be as above, then by uniform convergence, the integral
+$$\int_{\partial D_\rho(a)}f(z)\,\mathrm dz=2\pi ic_{-1}$$
+So we define
+\begin{definition}
+    $c_{-1}$ is defined as the residue $\operatorname{Res}_f(a)$ of $f$ at $a$.
+    And the series
+    $$\sum_{n=-\infty}^{-1}c_n(z-a)^n$$
+    is called the principal part of $f$.
+\end{definition}
+\begin{theorem}[Residue Theorem]
+    Let $U$ be a domain and $S=\{a_1,\ldots,a_k\}\subset U$.
+    Suppose $f$ is holomorphic on $U\setminus S$, then for any closed piecewise $C^1$ curve $\gamma:[0,1]\to U\setminus S$ homologous to $0$ in $U$, we have
+    $$\int_\gamma f(z)\,\mathrm dz=2\pi i\sum_{j=1}^kI(\gamma;a_j)\operatorname{Res}_f(a_j)$$
+\end{theorem}
+\begin{proof}
+    Let $g$ be the principal part of $f$ at $a_i$.
+    Then $g$ is holomorphic on $\mathbb C\setminus\{a_i\}$, so $f-(g_1+\cdots+g_k)$ is holomorphic in $U$ except at removable singularities, so by Cauchy's Theorem,
+    $$\int_\gamma f(z)\,\mathrm dz=\sum_{j=1}^k\int_\gamma g_j(z)\,\mathrm dz=2\pi i\sum_{j=1}I(\gamma,a_j)\operatorname{Res}_f(a)$$
+    as desired.
+\end{proof}
+There are some useful facts about residues.
+\begin{proposition}
+    If $f$ has a simple pole at $a$, then $\operatorname{Res}_f(a)=\lim_{z\to a}(z-a)f(a)$.
+    More generally, if $f$ has a pole of order $k$, then if we write $f(z)=(z-a)^{-k}g(z)$ for a holomorphic $g$, then $\operatorname{Res}_f(a)=g^{(k-1)}(a)/(k-1)!$.
+    If $f=g/h$ with $g,h$ holomorphic and at $a$, $g(a)\neq 0$ and $h$ has a simple zero at $a$, then $f(a)=g(a)/h^\prime(a)$.
+\end{proposition}
+\begin{proof}
+    Easy.
+\end{proof}
+\begin{proposition}[Jordan's Lemma]
+    If $f$ is holomorphic in $\{z\in\mathbb C:|z|>r\}$ for some $r>0$ and if $zf(z)$ is bounded for large $|z|$, then
+    $$\int_{\gamma_R}f(z)e^{i\alpha z}\,\mathrm dz\to 0,\gamma_R:[0,\pi]\ni t\mapsto Re^{it}$$
+    as $R\to\infty$.
+\end{proposition}
+\begin{proof}
+    Example sheet.
+    Use the fact that $\sin t/t\ge 2/\pi$ for $t\in (0,\pi/2]$.
+\end{proof}
+\begin{proposition}
+    Let $f$ be holomorphic on $D_R(a)\setminus\{a\}$ with a simple pole at $z=a$ and $\gamma_\epsilon:[\alpha,\beta]\ni t\mapsto a+\epsilon e^{it}$, then
+    $$\lim_{\epsilon\to 0^+}\int_{\gamma_\epsilon}f(z)\,\mathrm dz=(\beta-\alpha)i\operatorname{Res}_f(a)$$
+\end{proposition}
+\begin{proof}
+    Just write $f(z)=\operatorname{Res}_f(a)/(z-a)+g(z)$.
+\end{proof}
+\begin{example}
+    Let $R>\epsilon>0$.
+    Consider $f(z)=e^{iz}/z$ along the contour $\gamma=\gamma_1-\gamma_\epsilon+\gamma_2+\gamma_R$ where $\gamma_1$ is the segment $[-R,-\epsilon]$, $\gamma_2$ is $[\epsilon,R]$, and $\gamma_R(t)=Re^{it},\gamma_\epsilon(t)=\epsilon e^{it},t\in [0,\pi]$.
+    Now by Jordan's Lemma and the preceding proposition respectively, we have
+    $$\lim_{R\to\infty}\int_{\gamma_R}f(z)\,\mathrm dz=0,\lim_{\epsilon\to 0}\int_{\gamma_\epsilon}f(z)\,\mathrm dz=\pi i\operatorname{Res}_f(a)=\pi i$$
+    Now for $\epsilon,R$ as before we have
+    $$0=\int_\gamma f(z)\,\mathrm dz=\int_{-R}^{-\epsilon}\frac{e^{ix}}{x}\,\mathrm dx+\int_{-\gamma_\epsilon}f(z)\,\mathrm dz+\int_\epsilon^R\frac{e^{ix}}{x}\,\mathrm dx+\int_{\gamma_R}f(z)\,\mathrm dz$$
+    Now let $R\to\infty,\epsilon\to 0$, we get
+    $$2i\int_0^\infty\frac{\sin x}{x}\,\mathrm dx=\pi i\implies\int_0^\infty\frac{\sin x}{x}\,\mathrm dx=\frac{\pi}{2}$$
+\end{example}

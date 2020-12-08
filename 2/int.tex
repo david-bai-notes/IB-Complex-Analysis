@@ -1,0 +1,366 @@
+\section{Complex Integration}
+\subsection{Definition}
+We want to generalize the notion of the real Riemann integration to the integration to complex valued functions on the complex plane.
+\begin{definition}
+    If $f:[a,b]\to\mathbb C$ is continuous, then we define the integral of $f$ to be
+    $$\int_a^b f(x)\,\mathrm dx :=\int_a^b\operatorname{Re}f(x)\,\mathrm dx+i\int_a^b\operatorname{Im}f(x)\,\mathrm dx$$
+\end{definition}
+Easy to check that both integrals are well-defined and the integral is linear.
+\begin{proposition}
+    $$\left|\int_a^bf(t)\,\mathrm dt\right|\le (b-a)\sup_{t\in [a,b]}|f(t)|$$
+\end{proposition}
+\begin{proof}
+    If the integral is zero then there is nothing to prove.
+    Otherwise we can write it in the form $re^{i\theta}$ for some $r\in\mathbb R_{>0},\theta\in\mathbb R$, so
+    \begin{align*}
+        \left|\int_a^bf(t)\,\mathrm dt\right|=r&=\int_a^be^{-i\theta}f(t)\,\mathrm dt\\
+        &=\int_a^b\operatorname{Re}(e^{-i\theta}f(t))\,\mathrm dt\\
+        &\le \int_a^b|\operatorname{Re}(e^{-i\theta}f(t))|\,\mathrm dt\\
+        &\le \int_a^b|f(t)|\,\mathrm dt\\
+        &\le (b-a)\sup_{t\in [a,b]}|f(t)|
+    \end{align*}
+    As desired.
+\end{proof}
+Note that the equality holds iff $f$ is constant.
+\begin{definition}
+    Let $\gamma:[a,b]\to\mathbb C$ be a $C^1$ curve, then the length of $\gamma$ is
+    $$\int_a^b|\gamma^\prime(t)|\,\mathrm dt$$
+    Also this curve is called simple iff $\gamma(t_1)=\gamma(t_2)\iff t_1\equiv t_2\pmod{b-a}$
+\end{definition}
+\begin{definition}
+    Let $\gamma:[a,b]\to\mathbb C$ be a $C^1$ curve and $f:U\to\mathbb C$ be continuous, then we define the integral of $f$ over $\gamma$ by
+    $$\int_\gamma f(t)\,\mathrm dt=\int_a^b(f\circ\gamma)(t)\gamma^\prime(t)\,\mathrm dt$$
+\end{definition}
+One can check that
+\begin{proposition}
+    1.
+    $$\left(\int_{\gamma}f\right)+\alpha\left(\int_\gamma g\right)=\int_\gamma(f+\alpha g)$$
+    2. 
+    $$\int_{\gamma\pm\delta}=\int_\gamma\pm\int_\delta$$
+    3. Let $\gamma,\delta$ be two parameterizations of the same curve linked by an injective $C^1$ function, then
+    $$\int_\gamma=\int_\delta$$
+\end{proposition}
+Where the addition and substraction of paths are defined the way a sensible person would expect.
+\begin{proof}
+    Trivial.
+\end{proof}
+\begin{definition}
+    For continuous piecewise $C^1$ curves $\gamma=\gamma_1+\gamma_2+\cdots+\gamma_n$, we set
+    $$\int_\gamma=\sum_{k=1}^n\int_{\gamma_k}$$
+\end{definition}
+Note that by additivity of the integral over paths, this is well-defined.
+\begin{proposition}
+    For any continuous function $f:U\to\mathbb c$ and any (piecewise $C^1$) curve $\gamma:[a,b]\to U$, we have
+    $$\left|\int_\gamma f(z)\,\mathrm dz\right|\le\sup_{t\in[a,b]}|f(\gamma(t))|\int_a^b|\gamma^\prime(t)|\,\mathrm dt$$
+\end{proposition}
+\begin{proof}
+    Suffices to show the case when $\gamma$ is $C^1$, then
+    \begin{align*}
+        \left|\int_\gamma f(z)\,\mathrm dz\right|&=\left|\int_a^bf(\gamma(t))\gamma^\prime(t)\,\mathrm dt\right|\\
+        &\le\int_a^b|f(\gamma(t))||\gamma^\prime(t)|\,\mathrm dt\\
+        &\le\sup_{t\in[a,b]}|f(\gamma(t))|\int_a^b|\gamma^\prime(t)|\,\mathrm dt
+    \end{align*}
+    As desired.
+\end{proof}
+\subsection{Cauchy's Theorem}
+\begin{theorem}[Fundamental Theorem of Calculus for Complex Integrals]
+    For a continuous function $f:U\to\mathbb C$, if there is a holomorphic $F:U\to\mathbb C$ such that $F^\prime=f$, then for any (piecewise $C^1$) curve $\gamma:[a,b]\to\mathbb C$ we have
+    $$\int_\gamma f(z)\,\mathrm dz=F(\gamma(b))-F(\gamma(a))$$
+\end{theorem}
+In particular we have
+$$\oint_\gamma f(z)\,\mathrm dz=0$$
+For closed $\gamma$.
+\begin{proof}
+    Again suffices to consider $\gamma$ as $C^1$, then we have
+    $$\int_\gamma f(z)\,\mathrm dz=\int_a^bF^\prime(\gamma(t))\gamma^\prime(t)\,\mathrm dt=\int_a^b(F\circ\gamma)^\prime(t)\,\mathrm dt=F(\gamma(b))-F(\gamma(a))$$
+    Done.
+\end{proof}
+\begin{example}
+    For $\gamma:[0,\pi]\to\mathbb C$ by $t\mapsto Re^{2it}$, we have for $n\neq -1$
+    $$\oint_\gamma z^n\,\mathrm dz=0$$
+    Indeed it is the derivative of the holomorphic function $z^{n+1}/(n+1)$.\\
+    But for $n=-1$,
+    $$\oint_\gamma z^{-1}\,\mathrm dz=2\pi R$$
+    which is nonzero, hence it does not have an antiderivative defined on any open set containing $\gamma$, so logarithm has no branch on $\mathbb C^\star$.
+\end{example}
+What is interesting is the converse of the theorem.
+\begin{theorem}
+    Let $U$ be a path-connected open set, and $f:U\to\mathbb C$ be continuous.
+    If for any (piecewise $C^1$) closed curve $\gamma:[a,b]\to U$ we have
+    $$\oint_\gamma f(z)\,\mathrm dz$$
+    then $f$ has an antiderivative on $U$.
+\end{theorem}
+\begin{proof}
+    Fix $\alpha\in U$.
+    Consider the function $F:U\to\mathbb C$ with
+    $$F(z)=\int_\gamma f(z)\,\mathrm dz$$
+    where $\gamma$ is a piecewise $C^1$ curve on $U$ connecting $\alpha$ and $z$.
+    To see the existence of $\gamma$, we know by path-connectedness of $U$ that there is a continuous curve from $\alpha$ to $z$, then we can construct a piecewise $C^1$ one by a compactness argument.\\
+    Then such an $F$ is well defined by our condition.
+    One can simply check to see that $F$ is holomorphic and $F^\prime=f$.
+\end{proof}
+\begin{definition}
+    A domain $U$ is star-shaped if $\exists s\in U$ such that any other $x\in U$, there is a straight line joining $x$ and $s$.
+\end{definition}
+\begin{definition}
+    A triangle $T$ is the convex hull of three non-colinear points on the complex plane, so
+    $$T(z_1,z_2,z_3)=\{az_1+bz_2+cz_3:a,b,c\in [0,1],a+b+c=1\}$$
+    We denote by $\partial T$ the boundary of $T$, which is the union of three line segments, and we choose it to be with anticlockwise direction. 
+\end{definition}
+\begin{corollary}
+    In any star-shaped domain, if for any triangle $T$ in the domain we have
+    $$\oint_{\partial T}f(z)\,\mathrm dz=0$$
+    then $f$ admits a holomorphic antiderivative.
+\end{corollary}
+\begin{proof}
+    Basically the same proof but take $\alpha=s$ and take the path to be a straight line.
+\end{proof}
+\begin{theorem}[Cauchy's Theorem]
+    For a holomorphic $f$ and closed $\gamma$,
+    $$\oint_\gamma f(z)\,\mathrm dz=0$$
+\end{theorem}
+\begin{theorem}[Cauchy's Theorem for Triangles]
+    Let $U\subset C$ be open and $f:U\to\mathbb C$ holomorphic.
+    If $T$ is a triangle in $U$, then
+    $$\oint_{\partial T}f(z)\,\mathrm dz=0$$
+\end{theorem}
+\begin{proof}
+    We subdivide the triangles by joining the midpoints, so we disassembles $T$ into $4$ smaller triangles.
+    Call them $T^1,T^2,T^3,T^4$, and the directions of their boundaries are consistently given (anticlockwise), so we have
+    $$\oint_{\partial T}f(z)\,\mathrm dz=\sum_{k=1}^4\oint_{\partial T^k}f(z)\,\mathrm dz$$
+    We set
+    $$\eta(T)=\oint_{\partial T}f(z)\,\mathrm dz$$
+    So $\eta(T)=\sum_{k}\eta(T^k)$, hence there is some $k$ such that $|\eta(T^k)|\ge|\eta(T)|/4$, and $\operatorname{length}(\partial T^k)=\operatorname{length}(\partial T)/2$, so we repeat this process to get a nested sequence of triangles $T=T_0\supset T_1\supset T_2\supset\cdots$ such that $|\eta(T_k)|/4\le|\eta(T_{k+1})|$ and $\operatorname{length}(\partial T_{k+1})=\operatorname{length}(\partial T_k)/2$.
+    But each $T_k$ is closed and the diameter goes to $0$, hence $\bigcap_kT_k=\{z_0\}$ for some $z_0\in\mathbb C$.
+    For any $\epsilon>0$, there is some $\delta>0$ such that $|z-z_0|<\delta\implies |f(z)-f(z_0)-f^\prime(z_0)(z-z_0)|<\epsilon|z-z_0|$
+    For $n$ large enough, we have $T_n\subset D_\delta(z_0)$.
+    \begin{align*}
+        |\eta(T_n)|&=\left|\oint_{\partial T_n}f(z)-(f(z_0)+f^\prime(z_0)(z-z_0))\,\mathrm dz\right|\\
+        &\le\sup_{z\in \delta T_n}|f(z)-(f(z)+f^\prime(z_0)(z-z_0)|\operatorname{length}(\partial T_n)\\
+        &\le\epsilon\sup_{z\in\partial T_n}|z-z_0|\operatorname{length}(\partial T_n)\\
+        &\le\epsilon(\operatorname{length}(\partial T_n))^2
+    \end{align*}
+    So
+    $$\frac{\eta(T)}{4^n}\le\epsilon(\operatorname{length}(\partial T^n))^2=\frac{\epsilon(\operatorname{length}(\partial T))^2}{4^n}\implies\forall\epsilon>0,\eta(T)\le \epsilon(\operatorname{length}(\partial T))^2$$
+    Hence we must have $\eta(T)=0$.
+\end{proof}
+\begin{theorem}
+    Let $f:U\to\mathbb C$ be continuous.
+    If $S\subset U$ is a finite set and if $f$ is holomorphic in $U\setminus S$, then
+    $$\oint_{\partial T}f(z)\,\mathrm dz=0$$
+    for any triangle $T\subset U$.
+\end{theorem}
+\begin{proof}
+    Subdivide $T$ into $N=4^n$ parts as before to $T_1,T_2,\ldots,T_N$, then $|I|\le 6|S|$ where $I=\{j:T_j\cap S\neq\varnothing\}$.
+    Hence we have, by Cauchy's Theorem on triangles,
+    \begin{align*}
+        \left|\oint_{\partial T}f(z)\,\mathrm dz\right|&=\left|\sum_{j\in I}\oint_{\partial T_j}f(z)\,\mathrm dz\right|\\
+        &\le\sum_{j\in I}\sup_{z\in\partial T_j}|f(z)|\operatorname{length}(\partial T_j)\\
+        &\le 6|S|\sup_{z\in\partial T}|f(z)|\operatorname{length}(\partial T)\frac{1}{2^n}
+    \end{align*}
+    Letting $n\to\infty$ finishes the proof.
+\end{proof}
+\begin{corollary}[Cauchy's Theorem on Star-Shaped Domains]
+    Let $U\subset C$ be a star-shaped domain and $f:U\to\mathbb C$ be continuous, and holomorphic on $U\setminus S$ where $S$ is a finite set.
+    Then
+    $$\oint_\gamma f(z)\,\mathrm dz=0$$
+    for any closed curve on $U$.
+\end{corollary}
+\begin{proof}
+    Follows directly.
+\end{proof}
+\subsection{Cauchy Integral Formula and Consequences}
+\begin{theorem}[Cauchy's Integral Formula for a disk]
+    Let $D=D_r(a)$, and let $f:D\to\mathbb C$ be holomorphic, then for any $0<\rho<r$ and any $w\in D_\rho(a)$, we have
+    $$f(w)=\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{z-w}\,\mathrm dz$$
+    where $\partial D_\rho(a)$ denotes the curve $[0,1]\ni t\mapsto a+\rho e^{2\pi it}$
+\end{theorem}
+In particular,
+$$f(a)=\int_0^1 f(a+\rho e^{2\pi it})\,\mathrm dt$$
+This is known as the mean-value property.
+\begin{proof}
+    We have
+    $$\oint_{\partial D_\rho(a)}\frac{f(z)-f(w)}{z-w}\,\mathrm dz=0$$
+    by the preceding theorem.
+    So we have
+    \begin{align*}
+        \oint_{\partial D_\rho(a)}\frac{f(z)}{z-w}\,\mathrm dz&=f(w)\oint_{\partial D_\rho(a)}\frac{1}{z-w}\,\mathrm dz\\
+        &=f(w)\oint_{\partial D_\rho(a)}\frac{1}{z-a}\,\mathrm dz+f(w)\oint_{\partial D_\rho(a)}\sum_{n=1}^\infty\frac{(w-a)^n}{(z-a)^{n+1}}\,\mathrm dz\\
+        &=f(w)2\pi i+f(w)\sum_{n=1}^\infty(w-a)^n\oint_{\partial D_\rho(a)}\frac{1}{(z-a)^{n+1}}\,\mathrm dz\\
+        &=f(w)2\pi i
+    \end{align*}
+    Note that we can change the order of integration and summation since the series (as a geometric series) converges uniformly (which is easy enough to prove).
+\end{proof}
+So we can prove that a bounded entire function is constant.
+\begin{proof}[Proof of Theorem \ref{holo_bdd_const}]
+    Let $f$ be a bounded entire function.
+    It suffice to assume that $f$ has sublinear growth since it is bounded.
+    So $|f(z)|\le C(1+|z|^\alpha)$ for some $C\ge 0$ and $\alpha\in (0,1)$.
+    Let $w\in\mathbb C$, by Cauchy integral formula, for any $\rho>|w|$ we have
+    $$f(w)=\frac{1}{2\pi i}\oint_{D_\rho(0)}\frac{f(z)}{z-w}\,\mathrm dz$$
+    Also
+    $$f(0)=\frac{1}{2\pi i}\oint_{D_\rho(0)}\frac{f(z)}{z}\,\mathrm dz$$
+    Hence
+    \begin{align*}
+        |f(w)-f(0)|&=\left|\frac{1}{2\pi i}\oint_{D_\rho(0)}f(z)\left(\frac{1}{z-w}-\frac{1}{z}\right)\,\mathrm dz\right|\\
+        &=\frac{|w|}{2\pi}\left|\oint_{D_\rho(0)}\frac{f(z)}{z(z-w)}\,\mathrm dz\right|\\
+        &\le|w|\rho\sup_{z\in D_\rho(0)}\frac{|f(z)|}{|z||z-w|}\\
+        &=\sup_{z\in D_\rho(0)}\frac{|w||f(z)|}{|z-w|}\\
+        &\le\sup_{z\in D_\rho(0)}\frac{|w|C(1+\rho^\alpha)}{|z-w|}\to 0
+    \end{align*}
+    As $\rho\to\infty$.
+    Hence $f(w)=f(0)$.
+\end{proof}
+\begin{corollary}
+    Every nonconstant polynomial with complex coefficient has a root in $\mathbb C$.
+\end{corollary}
+\begin{proof}
+    Assume there is a complex polynomial $p(z)=a_nz^n+\cdots+a_0$ with $n\ge1,a_n\neq 0$ which has no root, then $p$ is never $0$, hence $1/p$ is entire.
+    So it suffices to show that $p$ is bounded.
+    Note that for $z\neq 0$ we have $|p(z)|=|z^n||a_n+a_{n-1}z^{-1}+\cdots+a_0z^{-n}|\to\infty$ as $|z|\to\infty$.
+    Hence we can choose $R>0$ such that $p(z)\ge 1$ for any $|z|>R$, so $p$ is bounded outside the disk $B_R(0)$, but it is also bounded inside it since $B_R(0)$ is compact.
+    So by Theorem \ref{holo_bdd_const}, $p$ must be a constant, contradiction.
+\end{proof}
+\begin{theorem}[Local Maximum Modulus Principle]
+    Let $f:D_r(a)\to\mathbb C$ be holomorphic.
+    If $|f(z)|\le|f(a)|$ for any $z\in D_r(a)$, then $f$ is constant.
+\end{theorem}
+\begin{proof}
+    We shall use the mean-value property.
+    $$f(a)=\int_0^1 f(a+\rho e^{2\pi it})\,\mathrm dt$$
+    for any $0<\rho<r$.
+    So
+    $$|f(a)|=\left|\int_0^1 f(a+\rho e^{2\pi it})\,\mathrm dt\right|\le\sup_{t\in [0,1]}|f(a+\rho e^{2\pi it})|\le|f(a)|$$
+    So automatically all inequality must be equality, therefore $|f(a+\rho e^{2\pi it})|$ must be constant.
+    But this works for all $\rho\in (0,r)$, so $|f|$ is constant, which implies $f$ being constant by Cauchy-Riemann equation.
+\end{proof}
+\begin{theorem}[Taylor Series]
+    Let $f:D_r(a)\to\mathbb C$ be holomorphic.
+    Then $f$ has a convergent power series representation on $D_a(r)$ in the form
+    $$f(w)=\sum_{n=0}^\infty c_n(w-a)^n,c_n=\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{(z-a)^{n+1}}\,\mathrm dz$$
+    for $|w|<\rho<r$.
+\end{theorem}
+Once we have established this, we immediately know that $f$ is infinitely differentiable on $D_a(r)$, therefore $c_n=f^{(n)}(a)/n!$.
+\begin{proof}
+    For any $w\in D_r(a)$ and any $\rho$ with $|w-a|<\rho<r$ we have
+    \begin{align*}
+        f(w)&=\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{z-w}\,\mathrm dz\\
+        &=\frac{f(z)}{2\pi i}\oint_{\partial D_\rho(a)}\sum_{n=0}^\infty\frac{(w-a)^n}{(z-a)^{n+1}}\,\mathrm dz\\
+        &=\sum_{n=0}^\infty(w-a)^n\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{(z-a)^{n+1}}\,\mathrm dz
+    \end{align*}
+    We can change the order of integration since a geometrical series is uniform.
+    This gives us the desired series.
+\end{proof}
+\begin{corollary}
+    If $f:U\to\mathbb C$ is holomorphic where $U$ is open, then $f$ has derivative of all orders and they are all holomorphic.
+\end{corollary}
+\begin{proof}
+    Follows directly.
+\end{proof}
+A function, real or complex, is said to be analytic on an open set if it has a convergent power series representation there.
+So for a complex function, being analytic is equivalent to being holomorphic.
+But for real functions, even infinite differentiability does not imply a function is analytic, for example
+$$f(x)=\begin{cases}
+    e^{-1/x^2}\text{, for $x\neq 0$.}\\
+    0\text{, for $x=0$.}
+\end{cases}$$
+From now on, we can use analytic and holomorphic interchangably.
+We can also say now that if we decompose $f=u+iv$, then $u,v$ are automatically smooth given $f$ holomorphic.
+\begin{theorem}[Morera's Theorem]
+    Let a complex function $f:U\to\mathbb C$ be continuous.
+    Suppose that its integral is $0$ along any closed curve, then $f$ is holomorphic.
+\end{theorem}
+\begin{proof}
+    The antiderivative exists and is holomorphic, so its derivative $f$ is holomorphic.
+\end{proof}
+\begin{theorem}[Cauchy's Integral Formula for Derivatives]
+    For a holomorphic function $f:D=D_r(a)\to\mathbb C$ and for any $w\in D$ and $|w|<\rho<r$, we have
+    $$f^\prime(w)=\frac{1}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{(z-w)^2}\,\mathrm dz$$
+    More generally,
+    $$f^{(n)}(w)=\frac{n!}{2\pi i}\oint_{\partial D_\rho(a)}\frac{f(z)}{(z-w)^{n+1}}\,\mathrm dz$$
+\end{theorem}
+\begin{proof}
+    Consider the function $g(z)=f(z)/(z-w)$ and its derivative gives the $n=1$ case.
+    The general case follows from induction.
+\end{proof}
+\begin{definition}
+    Let $U\subset\mathbb C$ be an open set and let $(f_n)$ be a sequence of complex functions.
+    We say it converges locally uniformly if for any $a\in U$, there is some $r>0$ such that $(f_n)$ converges uniformly on $D_r(a)\subset U$.
+\end{definition}
+\begin{proposition}
+    $(f_n)$ converges locally uniformly on $U$ iff it converges uniformly on any compact subset of $U$.
+\end{proposition}
+\begin{proof}
+    Easy.
+\end{proof}
+\begin{theorem}
+    Let $f_n:U\to\mathbb C$ be a sequence of holomorphic functions that converges to $f$ locally uniformly on $U$, then $f$ is holomorphic.
+    Moreover, $f_n^\prime\to f^\prime$ locally uniformly on $U$.
+\end{theorem}
+\begin{remark}
+    This is totally not true in the real case since we can approximate any continuous function on a closed interval locally uniformly by polynomials (Weierstrass Approximation Theorem).
+\end{remark}
+\begin{proof}
+    $f$ is continuous since continuity is a local property and we already know that the uniform limit of continuous functions is continuous.
+    Pick any point $a\in U,r>0$ with $B_r(a)\subset U$ and $f_n\to f$ uniformly on $B_r(a)$, the by Cauchy's Theorem on star-shaped domains, we have
+    $$\oint_\gamma f_n(z)\,\mathrm dz=0$$
+    for any closed $\gamma$ on the disk.
+    Then by uniformity
+    $$\oint_\gamma f(z)\,\mathrm dz=\oint_\gamma\lim_{n\to\infty}f_n(z)\,\mathrm dz=\lim_{n\to\infty}\oint_\gamma f_n(z)\,\mathrm dz$$
+    So $f$ is holomorphic on the disk.
+    The derivative case follows from Cauchy Integral Formula for derivatives.
+\end{proof}
+\begin{theorem}[Principle of Isolated Zero]
+    Let $f:D_R(w)\to\mathbb C$ be holomorphic and not identically zero, then the zeros of $f$ are isolated, that is, there exists $0<r\le R$ such that $f(z)\neq 0$ for any $0<|z-w|<r$.
+\end{theorem}
+\begin{proof}
+    Trivial.
+\end{proof}
+\begin{remark}
+    The zeros of a holomorphic function can have a limit point on the boundary of the domain.
+    For example, $f(z)=\sin(1/z)$ on $\mathbb C^\star$.
+\end{remark}
+\subsection{Analytic Continuation}
+By Taylor Series, we know that a holomorphic function $f$ on a disk $D_R(a)$ is completely determined by the values of the derivatives of $f$ at $a$.
+Does this generalize to arbitrary domains?
+\begin{theorem}
+    Let $D'\subset D$ be domains and $f:D'\to\mathbb C$ be analytic.
+    Then there is at most one analytic function $g:D\to\mathbb C$ such that $g|_{D'}=f$.
+\end{theorem}
+Such a function $g$ is called an analytic continuation of $f$ to $D$.
+\begin{proof}
+    Suppose there are two of the functions $g_1,g_2$ satisfying this condition, then $g_1|_{D'}=g_2|_{D'}=f$ and $h=g_1-g_2$.
+    Let $D_0=\{z\in D:\exists r>0, h|_{D_r(z)}\equiv 0\}$.
+    Then $D_0$ is open.
+    We shall show that it is also closed, which shall finish our proof.
+    But $D_1=\{z\in D:\exists n\in\mathbb N, h^{(n)}(z)\neq 0\}=D\setminus D_0$ is also open in $D$, so one of them is empty by connectedness.
+    But $D'\subset D_1$ hence $D_1$ is empty, therefore $h\equiv 0\implies g_1=g_2$.
+\end{proof}
+Actually this is a direct consequence of the Principle of Isolated Zeros, but one want to show that this depends entirely on the existence of Taylor series.
+\begin{remark}
+    1. The proof depends on the result that the functions have convergent Taylor series at every point, so it is valid for real valued analytic functions.\\
+    2. Analytic continuations to larger domains need not always exist.
+    For example, the function
+    $$f(z)=\sum_{n=0}^\infty z^{n!}$$
+    is analytic on $D_1(0)$, but we will prove in example sheet that this cannot be extend to larger domains.
+    $\partial D_1(0)$ is called the natural boundary of $f$.
+\end{remark}
+\begin{corollary}[Identity Principle]
+    Let $U\subset \mathbb C$ be a domain and let $f,g:U\to\mathbb C$ be holomorphic and the set $\{z\in U:f(z)=g(z)\}$ has a non-isolated point, then $f\equiv g$.
+\end{corollary}
+\begin{proof}
+    Immediate.
+\end{proof}
+\begin{corollary}[Global Maximum Principle]
+    Let $U\subset\mathbb C$ be a bounded domain and let $f:\bar{U}\to\mathbb C$ be continuous and holomorphic in $U$, then $\sup|f|$ is attained on the boundary $\partial U=\bar U\setminus U^\circ$.
+\end{corollary}
+\begin{proof}
+    Follows from the Local Maximum Principle and Identity Principle.
+\end{proof}
+\begin{remark}
+    Some of the theorems can generalize even further to help us to solve elliptic PDEs as a generlization to Laplace's Equation.
+    For example, we also have an analogue of analytic continuation and we can show that harmonic functions in any dimensions are infinitely differentiable.
+    Also some analogue of the Local Maximum Modulus Principle also hold.
+    So does the mean value property (but this time only for harmonic functions instead of general functions satisfying elliptic PDEs).
+    In fact, if the mean value property hold, the function has to be harmonic.
+\end{remark}
